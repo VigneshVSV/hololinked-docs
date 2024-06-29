@@ -1,12 +1,12 @@
 builtin-types 
 -------------
 
-These are the predefined parameter types. Others can be custom-defined by inheriting from ``Property`` base class 
+These are the predefined property types. Others can be custom-defined by inheriting from ``Property`` base class 
 or any of the following classes.
 
 .. toctree::
     :maxdepth: 1
-
+    
     string 
     number
     boolean
@@ -16,3 +16,4 @@ or any of the following classes.
     file_system
     typed_list
     typed_dict
+

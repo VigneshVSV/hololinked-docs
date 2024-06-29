@@ -10,7 +10,6 @@ properties
     helpers
 
 .. autoclass:: hololinked.server.property.Property()
-    :members:
     :show-inheritance:
 
 .. automethod:: hololinked.server.property.Property.validate_and_adapt
@@ -20,11 +19,15 @@ properties
 .. automethod:: hololinked.server.property.Property.setter
 
 .. automethod:: hololinked.server.property.Property.deleter  
+
+.. automethod:: hololinked.server.property.Property.comparator
    
 
 A few notes:
 
 * The default value of ``Property`` (first argument to constructor) is owned by the Property instance and not the object where the property is attached.
-* The value of a constant can still be changed in code by temporarily overriding the value of this attribute or ``edit_constant`` context manager.
+  Therefore if you use lists, dictionary or in general iterables, unfortunately it acts as a class attribute instead of instance attribute. set ``deepcopy_default``
+  to ``True`` to avoid sharing iterables among instances.
+* The value of a constant can still be changed by ``edit_constant`` context manager.
 
 

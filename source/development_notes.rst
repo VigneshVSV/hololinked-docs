@@ -24,7 +24,7 @@ explicitly implement a HTTP server. The following is possible with significantly
 * Events pushed by the object will be automatically tunneled as HTTP server sent events
 
 Further web request handlers may be modified to change headers, authentication etc. or add additional 
-endpoints which may cast resources to REST-like while leaving the RPC details to the package. One uses exposed object 
+endpoints which may cast resources to look REST-like while leaving the RPC details to the package. One uses exposed object 
 members as follows: 
 
 * properties can be used to model settings of instrumentation (both hardware and software-only), 
