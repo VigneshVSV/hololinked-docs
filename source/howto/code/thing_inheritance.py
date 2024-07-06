@@ -1,6 +1,6 @@
 from hololinked.server import Thing, Property, action, Event
 
-class Spectrometer(Thing):
+class OceanOpticsSpectrometer(Thing):
     """
     add class doc here
     """
@@ -13,4 +13,3 @@ class Spectrometer(Thing):
     def connect(self):
         """implemenet device driver logic to connect to hardware"""
         pass
-    

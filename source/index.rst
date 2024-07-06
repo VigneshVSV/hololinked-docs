@@ -20,9 +20,7 @@ concepts, one can still separate the concerns of the GUI and the other tools tha
 
 For those familiar with RPC & web development - This package is an implementation of a ZeroMQ-based Object Oriented RPC with customizable HTTP end-points. 
 A dual transport in both ZMQ and HTTP is provided to maximize flexibility in data type and serialization, although HTTP is preferred. Even through HTTP, 
-the paradigm of working is HTTP-RPC only, to queue the commands issued to hardware. The flexibility in HTTP endpoints is to offer a choice of 
-how the hardware looks on the network. If one is looking for an object oriented approach towards creating components within a control system, 
-data acquisition from hardware, or an IoT device, one may consider this package. 
+the paradigm of working is HTTP-RPC only, to queue the commands issued to hardware. 
 
 |PyPI| 
 
@@ -37,7 +35,7 @@ actions and events. In object oriented terms:
 
 * the hardware is represented by a class
 * properties are validated get-set attributes of the class which may be used to model hardware settings, hold captured/computed data 
-  or generic network accessible quantities etc.
+  or generic network accessible quantities.
 * actions are methods which issue commands like connect/disconnect, execute a control routine, start/stop measurement, or run arbitray python logic. 
 * events can asynchronously communicate/push (arbitrary) data to a client (say, a GUI), like alarm messages, streaming measured quantities etc. 
 

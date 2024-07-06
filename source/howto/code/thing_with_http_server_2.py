@@ -6,6 +6,9 @@ class Axis(Thing):
     """
     Represents a single stepper module of a Phytron Phymotion Control Rack
     """
+    def execute(self, command):
+        # implement device driver logic to send command to hardware
+        ...
 
     def get_referencing_run_frequency(self):
         resp = self.execute('P08R')

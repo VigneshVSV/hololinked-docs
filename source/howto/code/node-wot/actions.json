@@ -8,18 +8,19 @@
                 "op": "invokeaction",
                 "htv:methodName": "POST",
                 "contentType": "application/json"
-            }]
+            }],
+            "input": {
+                "type": "object",
+                "properties": {
+                    "trigger_mode": {
+                        "type": "number"
+                    },
+                    "integration_time": {
+                        "type": "number"
+                    }
+                },
+                "additionalProperties": false
+            }
         }
-    },
-    "events" : {
-        "measurement_event": {
-            "forms": [{
-                "href": "https://example.com/spectrometer/intensity/measurement-event",
-                "op": "subscribeevent",
-                "htv:methodName": "GET",
-                "contentType": "text/event-stream"
-            }]
-        }
-
     }
 }

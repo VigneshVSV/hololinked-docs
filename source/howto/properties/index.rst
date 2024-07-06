@@ -23,7 +23,7 @@ To make a property take any value, use the base class ``Property``:
 .. literalinclude:: ../code/properties/untyped.py
     :language: python
     :linenos:
-    :lines: 1-10, 35-37
+    :lines: 1-10, 37-39
   
 The descriptor object (instance of ``Property``) that performs the get-set operations & auto-allocation 
 of an internal instance variable for the property can be accessed by the instance under 

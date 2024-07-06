@@ -30,7 +30,7 @@ resources on the network. These classese are generally not for consumption by th
 
 |br|
 
-.. autoclass:: hololinked.server.dataklasses.RPCResource
+.. autoclass:: hololinked.server.dataklasses.ZMQResource
     :members: 
     :show-inheritance:
 

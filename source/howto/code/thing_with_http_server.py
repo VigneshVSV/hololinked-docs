@@ -21,8 +21,11 @@ class OceanOpticsSpectrometer(Thing):
         if autoconnect and self.serial_number is not None:
             self.connect(trigger_mode=0, integration_time=int(1e6)) # let's say, by default
         self._acquisition_thread = None
-        self.measurement_event = Event(name='intensity-measurement', 
-                                URL_path='/intensity/measurement-event')
+    
+    measurement_event = Event(name='intensity-measurement-event', 
+            URL_path='/intensity/measurement-event',
+            doc="""event generated on measurement of intensity, 
+                max 30 per second even if measurement is faster.""")
 
     @action(URL_path='/connect', http_method='POST')
     def connect(self, trigger_mode, integration_time):
@@ -34,7 +37,7 @@ class OceanOpticsSpectrometer(Thing):
 
     integration_time = Number(default=1000, bounds=(0.001, 1e6), crop_to_bounds=True, 
                             doc="""integration time of measurement in milliseconds,
-                                1μs (min) or 1s (max) """)
+                                1μs (min) or 1s (max)""")
     
     @integration_time.setter 
     def apply_integration_time(self, value : float):

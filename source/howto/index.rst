@@ -18,9 +18,9 @@
 Expose Python Classes
 =====================
 
-Normally, the device is interfaced with a computer through serial, Ethernet etc. or any OS supported hardware protocol, 
+Normally, the device is interfaced with a computer through USB, Ethernet etc. or any OS supported hardware protocol, 
 & one would write a class to encapsulate the instrumentation properties & commands. Exposing this class to other processes 
-and/or to the network, provides access to the hardware for multiple use cases in a client-server model. Such remotely visible 
+and/or to the network provides access to the hardware for multiple use cases in a client-server model. Such remotely visible 
 Python objects are to be made by subclassing from ``Thing``: 
 
 .. literalinclude:: code/thing_inheritance.py
@@ -37,7 +37,7 @@ that ``instance_name`` should be a URI compatible string.
 .. literalinclude:: code/thing_with_http_server.py
     :language: python
     :linenos:
-    :lines: 96-99
+    :lines: 99-102
 
 For attributes (like serial number above), if one requires them to be exposed, one should 
 use "properties" defined in ``hololinked.server.properties`` to "type define" the attributes of the object (in a python sense): 
@@ -57,9 +57,9 @@ For methods to be exposed on the network, one can use the ``action`` decorator:
 .. literalinclude:: code/thing_with_http_server.py
     :language: python
     :linenos:
-    :lines: 2-3, 7-20, 26-33
+    :lines: 2-3, 7-22, 29-36
 
-Arbitrary signature is permitted. Arguments are loosely typed and may need to be constrained with a schema, based 
+Arbitrary signature is permitted. Arguments are loosely typed and may need to be constrained with a schema based 
 on the robustness the developer is expecting in their application. However, a schema is optional and it only matters that 
 the method signature is matching when requested from a client. Again, specify the ``URL_path`` and HTTP request method 
 or leave them out according to the application needs. 
@@ -70,12 +70,12 @@ To start a HTTP server for the ``Thing``, one can call the ``run_with_http_serve
 .. literalinclude:: code/thing_with_http_server.py
     :language: python
     :linenos:
-    :lines: 96-100
+    :lines: 99-103
 
 
-By default, this starts a server a HTTP server and an INPROC zmq socket for the HTTP server to direct the requests 
-to the ``Thing`` object. This is a GIL constrained intra-process communication between the HTTP server and ZMQ socket 
-as far as python is concerned. All requests are queued normally by this zmq socket as the domain of operation 
+By default, this starts a server a HTTP server and INPROC zmq sockets for the HTTP server to direct the requests 
+to the ``Thing`` object. This is a GIL constrained intra-process communication as far as python is concerned.
+All requests are queued normally by the zmq sockets as the domain of operation 
 under the hood is remote procedure calls (RPC). Therefore, despite the number of requests made to the ``Thing``, only 
 one is executed at a time as the hardware normally responds to only one operation at a time. This can be overcome on 
 need basis manually through threading or async methods. 
@@ -86,7 +86,7 @@ the following:
 .. literalinclude:: code/thing_with_http_server_2.py
     :language: python
     :linenos: 
-    :lines: 5-25
+    :lines: 5-28
 
 In non expert terms, when a custom get-set method is not provided, properties look like class attributes however their 
 data containers are instantiated at object instance level by default. For example, the ``serial_number`` property defined 
@@ -97,22 +97,23 @@ internally generated name as the property value can be accessed again in any pyt
 ``self.device = Spectrometer.from_serial_number(self.serial_number)`` 
 |br|
 
-
 However, to avoid generating such an internal data container and instead apply the value on the device, one may supply 
 custom get-set methods using the fget and fset argument. This is generally useful as the hardware is a better source 
 of truth about the value of a property. Further, the write value of a property may not always correspond to a read 
-value due to hardware limitations, say, a linear stage could not move to the requested position due to obstacles.
+value due to hardware limitations. Say, a linear stage position property write is a command that requests a stage to move to a certain 
+position, whereas the read returns the current position. If the stage could not reach the target position due to obstacles,
+the write and read values differ. 
 
-Events are to be used to asynchronously push data to clients. One can store captured data in properties & supply clients 
-with the measured data using events:
+Events are to be used to asynchronously push data to clients. For example, one can supply clients with the 
+measured data using events:
 
 .. literalinclude:: code/thing_with_http_server.py 
     :language: python   
     :linenos:
-    :lines: 2-3, 5-20, 23-25, 66-85
+    :lines: 2-3, 7-11, 16-19, 24-28, 69-88
 
-Events can be defined as class or instance attributes and will be tunnelled as HTTP server sent events. Data may also be 
-polled by the client repeatedly but events save network time. 
+Data may also be polled by the client repeatedly but events save network time or allow sending data which cannot be timed,
+like alarm messages. Arbitrary payloads are supported, as long as the data is serializable.   
 
 As previously stated, if one is not interested or not knowledgable to write a HTTP interface, one may drop the URL paths 
 and HTTP methods altogether. In this case, the URL paths and HTTP methods will be autogenerated. 
@@ -120,19 +121,11 @@ and HTTP methods altogether. In this case, the URL paths and HTTP methods will b
 .. literalinclude:: code/thing_with_http_server.py 
     :language: python   
     :linenos:
-    :lines: 1-2, 7-12, 35-37, 86-94
+    :lines: 8-11, 37-40, 89-97
    
 Further, as it will be clear from :doc:`next <clients>` section, it is also not necessary to use HTTP, although it is 
-suggested to use it especially for network exposed objects because its a standarised protocol. Objects locally exposed 
+suggested especially for networked applications because its a standarised protocol. Objects locally exposed 
 only to other processes within the same computer may stick to ZMQ transport and avoid HTTP altogether if web development 
 is not necessary.
 
-It can be summarized that the three main building blocks of a network exposed object, or a hardware ``Thing`` are:
-
-* properties - use them to model settings of instrumentation (both hardware and software-only),
-  expose general class/instance attributes, captured & computed data
-* actions - use them to issue commands to instruments like start and stop acquisition, connect/disconnect etc.
-* events - push measured data, create alerts/alarms, inform availability of certain type of data etc.
-
-Each are separately discussed in depth in their respective sections within the doc found on the section navigation.
 
