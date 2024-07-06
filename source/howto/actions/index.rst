@@ -38,3 +38,6 @@ client side, there is no difference between invoking a normal action and an acti
 
 .. literalinclude:: ../code/actions/parameterized_function.py
     :lines: 36-54
+
+Since numpy arrays may also represented as lists in JSON specification, one may find this example artificial. 
+However this is rather a conceptual demonstration.

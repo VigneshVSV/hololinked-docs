@@ -17,7 +17,7 @@ class OceanOpticsSpectrometer(Thing):
         self.last_intensity = numpy.array([0 for i in range(1024)])
 
     last_intensity = ClassSelector(default=None, allow_None=True, class_=numpy.ndarray, 
-            URL_path='/intensity', doc="last measurement intensity (in arbitrary units)")
+                	doc="last measurement intensity (in arbitrary units)")
 
     @action() # non-JSON arguments are not supported with HTTP
     class subtract_custom_background(ParameterizedFunction):
@@ -25,7 +25,7 @@ class OceanOpticsSpectrometer(Thing):
 
         custom_background = ClassSelector(default=None, allow_None=True, 
                                 class_=numpy.ndarray, 
-                                doc="last measurement intensity (in arbitrary units)") 
+                                doc="background intensity to subtract (in arbitrary units)") 
         
         def __call__(self, 
                 instance : "OceanOpticsSpectrometer", 
