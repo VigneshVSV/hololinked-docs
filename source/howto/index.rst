@@ -13,7 +13,7 @@
     Expose Python Classes <self>
     clients
     properties/index
-
+    actions/index
     
 Expose Python Classes
 =====================

@@ -1,7 +1,9 @@
 import 'wot-bundle.min.js';
 
-servient = new Wot.Core.Servient(); // auto-imported by wot-bundle.min.js
+servient = new Wot.Core.Servient(); 
+// Wot.Core is auto-imported by wot-bundle.min.js
 servient.addClientFactory(new Wot.Http.HttpsClientFactory({ allowSelfSigned : true }))
+
 
 servient.start().then(async (WoT) => {
     console.debug("WoT servient started")
