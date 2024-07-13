@@ -80,6 +80,12 @@ in the list of allowed states). This is also currently applicable only when set 
 Local set operations are always executed irrespective of the state machine state. A get operation is always executed as 
 well even from the clients irrespective of the state. 
 
+``observable``
+++++++++++++++
+
+Observable properties push change events when the property is set or read. This is useful when one wants to monitor the
+property for changes without polling from the client. The payload of the change event is the new value of the property. 
+
 ``metadata``
 ++++++++++++
 
