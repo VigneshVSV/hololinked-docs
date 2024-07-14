@@ -15,12 +15,13 @@
 |module-highlighted| is a versatile and pythonic tool for building custom control and data acquisition 
 software systems. If you have a requirement to control and capture data from your hardware/instrumentation remotely through your 
 network, show the data in a browser/dashboard, provide a GUI or run automated scripts, 
-|module-highlighted| can help. Even if one wishes to do hardware control/data-acquisition in a single computer or a small setup without networking 
-concepts, one can still separate the concerns of the GUI and the other tools that interact with the device & the device itself.
+|module-highlighted| can help. Even for isolated applications or a small lab setup without networking concepts, one can still separate the 
+concerns of the tools that interact with the hardware & the hardware itself.
 
-For those familiar with RPC & web development - This package is an implementation of a ZeroMQ-based Object Oriented RPC with customizable HTTP end-points. 
-A dual transport in both ZMQ and HTTP is provided to maximize flexibility in data type and serialization, although HTTP is preferred. Even through HTTP, 
-the paradigm of working is HTTP-RPC only, to queue the commands issued to hardware. 
+For those familiar with RPC & web development - This package is an implementation of a ZeroMQ-based Object Oriented RPC with customizable 
+HTTP end-points. A dual transport in both ZMQ and HTTP is provided to maximize flexibility in data type, serialization and speed, 
+although HTTP is preferred for networked applications. If one is looking for an object oriented approach towards creating components within 
+a control or data acquisition system, or an IoT device, one may consider this package.
 
 |PyPI| 
 
