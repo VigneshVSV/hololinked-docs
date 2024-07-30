@@ -14,6 +14,7 @@
     clients
     properties/index
     actions/index
+    eventloop
     
 Expose Python Classes
 =====================

@@ -1,5 +1,5 @@
-Actions In-Depth
-================
+Actions
+=======
 
 :doc:`API Reference <../../autodoc/server/action>`
 
@@ -19,8 +19,8 @@ If an input schema is unspecified, the server will not validate the input data e
 The return value must be validated by clients themselves and one may supply a schema for the return value; there is 
 no separate validation on the server.
 
-If one encounters an uncomfortable use case of validating non-JSON arguments, the only other possibility 
-is to use ``ParameterizedFunction``. 
+If one encounters an uncomfortable use case of validating non-JSON arguments, until support for type annotations based 
+validations are added, the only other possibility is to use ``ParameterizedFunction``: 
 
 .. literalinclude:: ../code/actions/parameterized_function.py
     :lines: 3, 9-33
@@ -39,5 +39,3 @@ client side, there is no difference between invoking a normal action and an acti
 .. literalinclude:: ../code/actions/parameterized_function.py
     :lines: 36-54
 
-Since numpy arrays may also represented as lists in JSON specification, one may find this example artificial. 
-However this is rather a conceptual demonstration.
