@@ -19,7 +19,8 @@ class OceanOpticsSpectrometer(Thing):
                         **kwargs) 
         # you can also pass properties to init to auto-set (optional)
         if autoconnect and self.serial_number is not None:
-            self.connect(trigger_mode=0, integration_time=int(1e6)) # let's say, by default
+            self.connect(trigger_mode=0, integration_time=int(1e6)) 
+            # let's say, by default
         self._acquisition_thread = None
     
     measurement_event = Event(name='intensity-measurement-event', 
@@ -34,6 +35,10 @@ class OceanOpticsSpectrometer(Thing):
             self.device.trigger_mode(trigger_mode)
         if integration_time:
             self.device.integration_time_micros(integration_time)
+
+    @action()
+    def disconnect(self):
+        self.device.close()
 
     integration_time = Number(default=1000, bounds=(0.001, 1e6), crop_to_bounds=True, 
                             doc="""integration time of measurement in milliseconds,

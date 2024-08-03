@@ -21,9 +21,11 @@ class OceanOpticsSpectrometer(Thing):
         self.serial_number = serial_number
         if autoconnect and self.serial_number is not None:
             self.connect()
-        self.measurement_event = Event(name='intensity-measurement')
         self._acquisition_thread = None
 
+    measurement_event = Event(friendly_name='intensity-measurement', URL_path='/intensity/measurement-event', 
+                            doc="intensity measurement event, max 30 per second even if measurement is faster")
+    
     @action(URL_path='/connect')
     def connect(self, trigger_mode = None, integration_time = None):
         self.device = Spectrometer.from_serial_number(self.serial_number)
@@ -31,6 +33,10 @@ class OceanOpticsSpectrometer(Thing):
             self.device.trigger_mode(trigger_mode)
         if integration_time:
             self.device.integration_time_micros(integration_time)
+
+    @action()
+    def disconnect(self):
+        self.device.close()
               
     intensity = List(default=None, allow_None=True, doc="captured intensity", 
                     readonly=True, fget=lambda self: self._intensity.tolist())       
