@@ -1,6 +1,6 @@
 import logging, os, ssl
-from multiprocessing import Process
-import threading
+import multiprocessing, threading
+
 from hololinked.server import HTTPServer, Thing, Property, action, Event
 from hololinked.server.constants import HTTP_METHODS
 from hololinked.server.properties import String, List
@@ -79,15 +79,27 @@ def start_https_server():
 
 
 if __name__ == "__main__":
-   
-    Process(target=start_https_server).start()
-    # Remove above line if HTTP not necessary.
+    multiprocessing.Process(target=start_https_server).start()
+    # Remove above line if HTTP not necessary. One can also thread the HTTP server.
+    # threading.Thread(target=start_https_server).start()
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
                         serializer='msgpack', serial_number=None, autoconnect=False)
-    spectrometer.run(zmq_protocols="IPC")
+    spectrometer.run(zmq_protocols="IPC") # interprocess-communication
 
     # example code, but will never reach here unless exit() is called by the client
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
-                        serializer='msgpack', serial_number=None, autoconnect=False)
+                        serializer='pickle', serial_number=None, autoconnect=False)
     spectrometer.run(zmq_protocols=["TCP", "IPC"], 
-                    tcp_socket_address="tcp://0.0.0.0:6539")
+                    tcp_socket_address="tcp://*:6539")
+    
+    # example code, but will never reach here unless exit() is called by the client
+    spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
+                        serial_number=None, autoconnect=False)
+    spectrometer.run(zmq_protocols="TCP", 
+                    tcp_socket_address="tcp://*:6539")
+    
+    # example code, but will never reach here unless exit() is called by the client
+    spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
+                        serializer='pickle', serial_number=None, autoconnect=False)
+    spectrometer.run(zmq_protocols=["TCP", "IPC"], 
+                    tcp_socket_address="tcp://*:6539")

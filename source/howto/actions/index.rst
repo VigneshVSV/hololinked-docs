@@ -8,6 +8,9 @@ Only methods decorated with ``action()`` are exposed to clients.
 .. literalinclude:: ../code/no_network_thing.py 
     :lines: 40-43, 230-237, 303-307, 312, 370-373
 
+Arguments are loosely typed and may need to be constrained with a schema based 
+on the robustness the developer is expecting in their application. However, a schema is optional and it only matters that 
+the method signature is matching when requested from a client.
 Since python is loosely typed, the server may need to verify the argument types
 supplied by the client call. If the input data is JSON compliant (which is recommended),
 one can supply an input schema to the action decorator:
