@@ -54,7 +54,7 @@ class GentecOpticalEnergyMeter(Thing):
         self.set_sensor(kwargs.get('sensor', 'QE25LP-S-MB'))
         self._analog_output_enabled = False
 
-    @action(URL_path='/set-sensor', http_method='PUT', input_schema={'type': 'string'})
+    @action(URL_path='/set-sensor', input_schema={'type': 'string'})
     def set_sensor(self, value : str):
         """
         Set the attached sensor to the meter under control.

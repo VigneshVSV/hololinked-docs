@@ -1,6 +1,6 @@
 import logging, os, ssl
-from multiprocessing import Process
-import threading
+import multiprocessing, threading
+
 from hololinked.server import HTTPServer, Thing, Property, action, Event
 from hololinked.server.constants import HTTP_METHODS
 from hololinked.server.properties import String, List
@@ -21,9 +21,11 @@ class OceanOpticsSpectrometer(Thing):
         self.serial_number = serial_number
         if autoconnect and self.serial_number is not None:
             self.connect()
-        self.measurement_event = Event(name='intensity-measurement')
         self._acquisition_thread = None
 
+    measurement_event = Event(friendly_name='intensity-measurement', URL_path='/intensity/measurement-event', 
+                            doc="intensity measurement event, max 30 per second even if measurement is faster")
+    
     @action(URL_path='/connect')
     def connect(self, trigger_mode = None, integration_time = None):
         self.device = Spectrometer.from_serial_number(self.serial_number)
@@ -31,6 +33,10 @@ class OceanOpticsSpectrometer(Thing):
             self.device.trigger_mode(trigger_mode)
         if integration_time:
             self.device.integration_time_micros(integration_time)
+
+    @action()
+    def disconnect(self):
+        self.device.close()
               
     intensity = List(default=None, allow_None=True, doc="captured intensity", 
                     readonly=True, fget=lambda self: self._intensity.tolist())       
@@ -73,15 +79,27 @@ def start_https_server():
 
 
 if __name__ == "__main__":
-   
-    Process(target=start_https_server).start()
-    # Remove above line if HTTP not necessary.
+    multiprocessing.Process(target=start_https_server).start()
+    # Remove above line if HTTP not necessary. One can also thread the HTTP server.
+    # threading.Thread(target=start_https_server).start()
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
-                        serializer='msgpack', serial_number=None, autoconnect=False)
-    spectrometer.run(zmq_protocols="IPC")
+                        zmq_serializer='msgpack', serial_number=None, autoconnect=False)
+    spectrometer.run(zmq_protocols="IPC") # interprocess-communication
 
     # example code, but will never reach here unless exit() is called by the client
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
-                        serializer='msgpack', serial_number=None, autoconnect=False)
+                        zmq_serializer='pickle', serial_number=None, autoconnect=False)
     spectrometer.run(zmq_protocols=["TCP", "IPC"], 
-                    tcp_socket_address="tcp://0.0.0.0:6539")
+                    tcp_socket_address="tcp://*:6539")
+    
+    # example code, but will never reach here unless exit() is called by the client
+    spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
+                        serial_number=None, autoconnect=False)
+    spectrometer.run(zmq_protocols="TCP", 
+                    tcp_socket_address="tcp://*:6539")
+    
+    # example code, but will never reach here unless exit() is called by the client
+    spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
+                        zmq_serializer='pickle', serial_number=None, autoconnect=False)
+    spectrometer.run(zmq_protocols=["TCP", "IPC"], 
+                    tcp_socket_address="tcp://*:6539")

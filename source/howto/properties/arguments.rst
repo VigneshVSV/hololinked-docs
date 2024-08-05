@@ -17,7 +17,7 @@ Common arguments to all properties
 +++++++++++++++++++++
 
 ``doc`` allows clients to fetch a docstring for the property. ``label`` can be used to show the property 
-in a GUI for example. `hololinked-portal <https://github.com/VigneshVSV/hololinked-portal>`_ uses these two values in the same fashion. 
+in a GUI for example.  
 
 
 ``default``, ``class_member``, ``fget``, ``fset`` & ``fdel``
@@ -98,7 +98,7 @@ quantity.
 Properties can be stored & loaded in a database if necessary when the ``Thing`` is stopped and restarted. 
 
 * ``db_init`` only loads a property from database, when the value is changed, its not written back to the database. 
-  For this option, the value has to be pre-created in the database in some other fashion. hololinked-portal can help here.  
+  For this option, the value has to be pre-created in the database in some other fashion.
 
 * ``db_commit`` only writes the value into the database when an assignment is called. 
 

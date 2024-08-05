@@ -11,7 +11,6 @@ class OceanOpticsSpectrometer(Thing):
     """
 
     serial_number = String(default=None, allow_None=True, 
-                    URL_path='/serial-number', http_method=("GET", "PUT", "DELETE"),
                     doc="serial number of the spectrometer") # type: str
 
     def __init__(self, instance_name, serial_number, autoconnect, **kwargs):
@@ -19,7 +18,8 @@ class OceanOpticsSpectrometer(Thing):
                         **kwargs) 
         # you can also pass properties to init to auto-set (optional)
         if autoconnect and self.serial_number is not None:
-            self.connect(trigger_mode=0, integration_time=int(1e6)) # let's say, by default
+            self.connect(trigger_mode=0, integration_time=int(1e6)) 
+            # let's say, by default
         self._acquisition_thread = None
     
     measurement_event = Event(name='intensity-measurement-event', 
@@ -27,7 +27,7 @@ class OceanOpticsSpectrometer(Thing):
             doc="""event generated on measurement of intensity, 
                 max 30 per second even if measurement is faster.""")
 
-    @action(URL_path='/connect', http_method='POST')
+    @action()
     def connect(self, trigger_mode, integration_time):
         self.device = Spectrometer.from_serial_number(self.serial_number)
         if trigger_mode:
@@ -35,9 +35,14 @@ class OceanOpticsSpectrometer(Thing):
         if integration_time:
             self.device.integration_time_micros(integration_time)
 
-    integration_time = Number(default=1000, bounds=(0.001, 1e6), crop_to_bounds=True, 
-                            doc="""integration time of measurement in milliseconds,
-                                1μs (min) or 1s (max)""")
+    @action(URL_path='/disconnect', http_method="POST")
+    def disconnect(self):
+        self.device.close()
+
+    integration_time = Number(default=1000, bounds=(0.001, 1e6), 
+                URL_path='/integration-time', http_method=("GET", "PUT", "DELETE"),
+                doc="""integration time of measurement in milliseconds,
+                        1μs (min) or 1s (max)""", crop_to_bounds=True)
     
     @integration_time.setter 
     def apply_integration_time(self, value : float):
