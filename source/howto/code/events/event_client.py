@@ -19,5 +19,7 @@ def event_cb2(event_data):
     print("Second callback", event_data)
 
 energy_meter_proxy.subscribe_event(name='statistic-event', 
-                                callbacks=[event_cb1, event_cb2])
+                                callbacks=[event_cb1, event_cb2], 
+                                # thread_callbacks=True
+                            )
 # thread callbacks by setting thread_callbacks=True in the subscribe_event method

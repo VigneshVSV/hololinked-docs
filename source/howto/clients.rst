@@ -42,7 +42,7 @@ which is executed once an event arrives:
     :linenos: 
     :lines: 24-30
 
-One would be making using such logic in a PyQt graphical interface, python dashboard apps or custom scripts. To use multiple ZMQ transports:
+One would be using such logic in a PyQt graphical interface, python dashboard apps or custom scripts. To use multiple ZMQ transports:
 
 .. literalinclude:: code/thing_without_http_server.py 
     :language: python
@@ -69,7 +69,7 @@ Using ``node-wot`` HTTP(s) client
 `Web of Things Working Group <https://www.w3.org/WoT/>`_. One can implement both servers and 
 clients for hardware with this tool, therefore, if one requires a different coding style and language compared to 
 python, one can try ``node-wot``. 
-For ``hololinked``, ``node-wot`` can serve as a HTTP(s) client with predefined features. Apart from HTTP(s), the 
+For this package, ``node-wot`` can serve as a HTTP(s) client with predefined features. Apart from HTTP(s), the 
 overarching general purpose of this client is to be able to interact with hardware with a web standard compatible JSON(-LD) 
 specification called as the `Thing Description <https://www.w3.org/TR/wot-thing-description11/>`_. The said JSON specifcation 
 describes the hardware's available properties, actions and events (along with security definitions to access them) and 
@@ -77,7 +77,7 @@ describes the hardware's available properties, actions and events (along with se
 Further, the Thing Description provides human- and machine-readable documentation of the hardware within the specification itself, 
 enhancing developer experience. |br| 
 Here, we stick to HTTP(s) client usage of ``node-wot``. For example, consider the ``serial_number`` property defined previously, 
-the following JSON, which is part of the Thing Description, can describe the property:
+the following JSON, which is a part of the Thing Description, can describe the property:
 
 .. literalinclude:: code/node-wot/properties.json 
     :language: JSON
@@ -122,9 +122,9 @@ specify the payload schema otherwise payloads cannot be sent:
                 self.device.integration_time_micros(integration_time)
 
 The response is described in the ``output`` field of the action's description (``output_schema`` in the action decorator) and 
-may be omitted if it is python's ``None``. In general, the request and response contents are JSON objects (i.e having the same ``contentType``)
-and therefore specified only once in the form in this case. Since, currently, only JSON serializer is supported for HTTP protocol, 
-another content type is not possible with this package. However, in the general Thing Description itself, it is possible to separate 
+may be omitted if it is python's ``None``. In general, the request and response contents are JSON (i.e having the same ``contentType``)
+and therefore specified only once in the form in this case. Since, currently, only JSON serializer is supported for HTTP protocol in this package, 
+another content type is not possible. However, in the general Thing Description itself, it is possible to separate 
 the request and response content types if necessary.
 
 Regarding events, consider the ``measurement_event`` event:
@@ -140,8 +140,7 @@ It might be already understandable that from such a JSON specification, it is cl
 action or event. The ``node-wot`` HTTP(s) client consumes such a specification to provide these interactions for the developer. 
 Therefore, they are also called `interaction affordances` in the Web of Things terminology - "what interactions are provided (or afforded) 
 by the server or the Thing to the client". Properties are called Property Affordance, Actions - Action Affordance and Events - Event Affordance. 
-The payloads are called Data Schema indicating that they stick to JSON schema specification. Further definitions supported by the 
-Thing Description specification and provided by this package are discussed later. 
+The payloads are called Data Schema indicating that they stick to JSON schema specification.
 
 To use the node-wot client on the browser:
 
@@ -156,7 +155,7 @@ to co-exist. Once consumed, the properties, actions and events may be accessed a
 .. literalinclude:: code/node-wot/intro.js
     :language: javascript
     :linenos: 
-    :lines: 1-9, 17-
+    :lines: 8-9, 17-
 
 
 

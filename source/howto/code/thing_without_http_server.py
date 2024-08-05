@@ -83,12 +83,12 @@ if __name__ == "__main__":
     # Remove above line if HTTP not necessary. One can also thread the HTTP server.
     # threading.Thread(target=start_https_server).start()
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
-                        serializer='msgpack', serial_number=None, autoconnect=False)
+                        zmq_serializer='msgpack', serial_number=None, autoconnect=False)
     spectrometer.run(zmq_protocols="IPC") # interprocess-communication
 
     # example code, but will never reach here unless exit() is called by the client
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
-                        serializer='pickle', serial_number=None, autoconnect=False)
+                        zmq_serializer='pickle', serial_number=None, autoconnect=False)
     spectrometer.run(zmq_protocols=["TCP", "IPC"], 
                     tcp_socket_address="tcp://*:6539")
     
@@ -100,6 +100,6 @@ if __name__ == "__main__":
     
     # example code, but will never reach here unless exit() is called by the client
     spectrometer = OceanOpticsSpectrometer(instance_name='spectrometer', 
-                        serializer='pickle', serial_number=None, autoconnect=False)
+                        zmq_serializer='pickle', serial_number=None, autoconnect=False)
     spectrometer.run(zmq_protocols=["TCP", "IPC"], 
                     tcp_socket_address="tcp://*:6539")

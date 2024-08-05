@@ -32,6 +32,13 @@ class OceanOpticsSpectrometer(Thing):
                 custom_background : numpy.ndarray) -> numpy.ndarray:
             return instance.last_intensity - custom_background
 
+    @action()
+    def subtract_custom_background(self, custom_background):
+        if not isinstance(custom_background, numpy.ndarray):
+            raise TypeError("custom_background must be a numpy array")
+        return self.last_intensity - custom_background
+    
+
    
 def client():
     client = ObjectProxy(instance_name='spectrometer', protocol='IPC', 

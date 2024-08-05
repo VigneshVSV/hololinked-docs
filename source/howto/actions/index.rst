@@ -6,6 +6,8 @@ Actions
 Only methods decorated with ``action()`` are exposed to clients. 
 
 .. literalinclude:: ../code/no_network_thing.py 
+    :language: python
+    :linenos:
     :lines: 40-43, 230-237, 303-307, 312, 370-373
 
 Arguments are loosely typed and may need to be constrained with a schema based 
@@ -16,6 +18,8 @@ supplied by the client call. If the input data is JSON compliant (which is recom
 one can supply an input schema to the action decorator:
 
 .. literalinclude:: ../code/no_network_thing.py 
+    :language: python
+    :linenos:
     :lines: 40, 56-68
 
 If an input schema is unspecified, the server will not validate the input data even if arguments are present. 
@@ -23,7 +27,14 @@ The return value must be validated by clients themselves and one may supply a sc
 no separate validation on the server.
 
 If one encounters an uncomfortable use case of validating non-JSON arguments, until support for type annotations based 
-validations are added, the only other possibility is to use ``ParameterizedFunction``: 
+validations are added, one may perform one's own validation:
+
+.. literalinclude:: ../code/actions/parameterized_function.py
+    :language: python
+    :linenos:
+    :lines: 9-20, 34-39
+
+The only other builtin automatic validation possibility for non-JSON arguments is to use ``ParameterizedFunction``: 
 
 .. literalinclude:: ../code/actions/parameterized_function.py
     :lines: 3, 9-33
@@ -31,8 +42,7 @@ validations are added, the only other possibility is to use ``ParameterizedFunct
 ``ParameterizedFunction`` (s) are classes whose arguments are type defined using the same objects as properties 
 and implement the ``__call__`` method. However, this type definition using property object do not make these 
 arguments as properties of the ``Thing``. The implementation follows convention used by ``param`` where the 
-properties are termed as "parameters" (also hence the word "Parameterized"). 
-One may use a ``param.Parameter`` or a ``hololinked.server.Property`` (or their subclasses) interchangeably.
+properties are termed as "parameters" (also hence the word "ParameterizedFunction"). 
 
 The ``__call__`` method signature accepts its own self as the first argument, 
 followed by the ``Thing`` instance as the second argument and then the arguments supplied by the client. On the 
@@ -40,5 +50,5 @@ client side, there is no difference between invoking a normal action and an acti
 ``ParameterizedFunction``:
 
 .. literalinclude:: ../code/actions/parameterized_function.py
-    :lines: 36-54
+    :lines: 43-
 
