@@ -15,6 +15,7 @@
     properties/index
     actions/index
     events/index
+    object_proxy
     eventloop
     
 Expose Python Classes
