@@ -75,8 +75,35 @@ Timeout exceptions are raised when there is no reply within timeout specified.
 
 One cannot also combine `oneway` and `noblock`. 
 
+## async mixin
 
+To initialize an async client (along with a sync client), set `async_mixin` to `True`:
 
+```{literalinclude} code/object_proxy/async.py
+:language: python
+:linenos:
+:lines: 1-13
+```
 
+async calls can only be invoked along with the name of the object one is trying to access:
 
+```{literalinclude} code/object_proxy/async.py
+:language: python
+:linenos:
+:lines: 16-23
+```
 
+Beginners may not that this does not change the nature of the operation on the server side.
+The asynchronous nature is purely on the client side to perform other simultaneous (async) operations
+while the client is waiting for the network operation to complete. 
+
+A potential real use case is in GUIs or in controlling multiple devices:
+
+```{literalinclude} code/object_proxy/async.py
+:language: python
+:linenos:
+:lines: 16-23
+```
+
+`oneway` and `noblock` are not supported for async calls due to the asynchronous nature of the 
+operation themselves.
