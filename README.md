@@ -1,6 +1,6 @@
-# Hololinked Documentation
+# hololinked Documentation
 
-Documentation respository 
+Documentation respository in Sphinx/RST.
 
 # To build
 

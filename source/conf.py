@@ -35,8 +35,7 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx_copybutton',
     'sphinx_toolbox.collapse',
-    'numpydoc',
-    "myst_parser"
+    'numpydoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -84,7 +83,3 @@ autodoc_member_order = 'bysource'
 
 today_fmt = '%d.%m.%Y %H:%M'
 
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
