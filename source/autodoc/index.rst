@@ -37,14 +37,5 @@ API Reference
     client/index
 
 
-.. ``hololinked.system_host``
-.. --------------------------
-
-.. .. toctree:: 
-..     :maxdepth: 1 
-
-..     server/system_host/index
-
-
 
 
