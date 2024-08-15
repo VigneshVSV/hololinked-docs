@@ -23,4 +23,5 @@ SQLAlchemy_Utils==0.41.1
 tornado==6.3.3
 msgspec==0.18.6
 jsonschema==4.22.0
-git+https://github.com/VigneshVSV/hololinked.git@develop#egg=hololinked
+pydantic==2.8.2
+git+https://github.com/VigneshVSV/hololinked.git
