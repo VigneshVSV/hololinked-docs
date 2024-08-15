@@ -5,10 +5,12 @@
 # Required
 version: 2
 
+submodules:
+  exclude: all
+
 # Set the OS, Python version and other tools you might need
 build:
    os: ubuntu-22.04
-   submodules: false
    tools:
       python: "3.11"
       # You can also specify other tool versions:
